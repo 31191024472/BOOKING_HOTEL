@@ -1,0 +1,52 @@
+# Node modules - tuyệt đối không đẩy lên
+node_modules/
+
+# Môi trường - chứa MONGO_URI, JWT_SECRET, API keys
+.env
+
+# Log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Ứng dụng editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Build output (nếu có dùng Babel / TS)
+dist/
+build/
+
+# Coverage report (nếu chạy test)
+coverage/
+
+# Tạm thời của hệ thống
+*.bak
+*.tmp
+*.swp
+
+# Database dump
+dump/
+*.bson
+
+# Docker (nếu sau này có dùng)
+docker-compose.override.yml
+.env.local
+.env.*.local
+
+# Test report
+test-output/
+
+# PM2 logs
+pids
+*.pid
+*.seed
+*.pid.lock
