@@ -57,11 +57,9 @@ JWT_SECRET=superstrongsecret123!
 # Email Configuration để thực hiện chức năng gửi mail quên mật khẩu hay thông báo đặt phòng
 # Thay EMAIL_USER bằng địa chỉ Gmail của bạn
 # Ví dụ: EMAIL_USER=yourname@gmail.com
-EMAIL_USER=thanhgay171@gmail.com
 
 # Thay EMAIL_PASSWORD bằng App Password bạn vừa tạo
 # Ví dụ: EMAIL_PASSWORD=abcd efgh ijkl mnop
-EMAIL_PASSWORD=aomk wpic duaq hhuu
 ```
 
 #### **Bước 44: Khởi động backend**
