@@ -28,15 +28,29 @@ const Register = () => {
    */
   const handleSubmit = async (values) => {
     try {
-      const response = await fetch('http://localhost:5000/api/users/register', {
+      // Log dữ liệu form trước khi gửi
+      console.log('Form data being sent:', {
+        ...values,
+        password: '********', // Ẩn mật khẩu trong log
+        confirmPassword: '********'
+      });
+
+      // Xác định endpoint dựa trên loại tài khoản
+      const endpoint = values.role === 'partner'
+        ? 'http://localhost:5000/api/users/register'
+        : 'http://localhost:5000/api/users/register';
+
+      console.log('Sending request to endpoint:', endpoint);
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-  
+
       const data = await response.json();
-      console.log("Response:", data);
-  
+      console.log("Server response:", data);
+
       if (response.ok) {
         setToastMessage(REGISTRATION_MESSAGES.SUCCESS);
         setShowToast(true);
@@ -53,7 +67,7 @@ const Register = () => {
       setShowToast(true);
     }
   };
-  
+
   return (
     <>
       <div className="register__form">
@@ -63,9 +77,10 @@ const Register = () => {
               firstName: '',
               lastName: '',
               email: '',
-              phoneNumber: '',
+              phone: '',
               password: '',
               confirmPassword: '',
+              role: 'user', // Thêm giá trị mặc định cho loại tài khoản
             }}
             validationSchema={Schemas.signupSchema}
             onSubmit={(values) => handleSubmit(values)}
@@ -80,6 +95,28 @@ const Register = () => {
                     <p className="text-gray-500">
                       Tạo tài khoản và bắt đầu hành trình của bạn
                     </p>
+                  </div>
+                  <div className="mb-6">
+                    <div className="flex justify-center space-x-4">
+                      <label className="inline-flex items-center">
+                        <Field
+                          type="radio"
+                          name="role"
+                          value="user"
+                          className="form-radio h-4 w-4 text-brand"
+                        />
+                        <span className="ml-2">Người dùng</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <Field
+                          type="radio"
+                          name="role"
+                          value="partner"
+                          className="form-radio h-4 w-4 text-brand"
+                        />
+                        <span className="ml-2">Đối tác</span>
+                      </label>
+                    </div>
                   </div>
                   <div className="flex flex-wrap mb-6 -mx-3">
                     <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0 relative">
@@ -109,11 +146,14 @@ const Register = () => {
                   </div>
                   <div className="mb-6">
                     <Field
-                      name="phoneNumber"
+                      name="phone"
                       placeholder="Số điện thoại"
                       autoComplete="tel"
-                      className={`${errors.phoneNumber && touched.phoneNumber ? 'border-red-500' : ''} border block w-full px-4 py-3 mb leading-tight text-gray-700 bg-gray-200 rounded appearance-none focus:outline-none focus:bg-white`}
+                      className={`${errors.phone && touched.phone ? 'border-red-500' : ''} border block w-full px-4 py-3 mb leading-tight text-gray-700 bg-gray-200 rounded appearance-none focus:outline-none focus:bg-white`}
                     />
+                    {errors.phone && touched.phone && (
+                      <div className="text-red-500 text-xs mt-1">{errors.phone}</div>
+                    )}
                   </div>
                   <div className="mb-6">
                     <Field
@@ -122,6 +162,9 @@ const Register = () => {
                       autoComplete="new-password"
                       className={`${errors.password && touched.password ? 'border-red-500' : ''} border block w-full px-4 py-3 mb leading-tight text-gray-700 bg-gray-200 rounded appearance-none focus:outline-none focus:bg-white`}
                     />
+                    {errors.password && touched.password && (
+                      <div className="text-red-500 text-xs mt-1">{errors.password}</div>
+                    )}
                   </div>
                   <div className="mb-6">
                     <Field
@@ -130,6 +173,9 @@ const Register = () => {
                       autoComplete="new-password"
                       className={`${errors.confirmPassword && touched.confirmPassword ? 'border-red-500' : ''} border block w-full px-4 py-3 mb leading-tight text-gray-700 bg-gray-200 rounded appearance-none focus:outline-none focus:bg-white`}
                     />
+                    {errors.confirmPassword && touched.confirmPassword && (
+                      <div className="text-red-500 text-xs mt-1">{errors.confirmPassword}</div>
+                    )}
                   </div>
                   <div className="flex items-center w-full my-3">
                     <button

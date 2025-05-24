@@ -37,7 +37,8 @@ import {
   getDashboardStats,
   getBookingReports,
   getRevenueReports,
-  getOccupancyReports
+  getOccupancyReports,
+  updateBookingStatus
 } from '../controllers/partnerController.js';
 
 const router = express.Router();
@@ -82,8 +83,7 @@ router.get('/reports/bookings', getBookingReports);
 router.get('/reports/revenue', getRevenueReports);
 router.get('/reports/occupancy', getOccupancyReports);
 
-
-
-
+// Cập nhật trạng thái đặt phòng
+router.put('/bookings/:bookingId/status', updateBookingStatus);
 
 export default router;  

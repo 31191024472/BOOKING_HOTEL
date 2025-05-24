@@ -1,4 +1,5 @@
 import bookingRepository from "../repositories/bookingRepository.js";
+import Booking from "../models/Booking.js";
 
 class BookingService {
   async createBooking(bookingData) {
@@ -19,6 +20,27 @@ class BookingService {
   
     return bookings;
 
+  }
+  // Cập nhật trạng thái đặt phòng
+  async updateBookingStatus(bookingId, status) {
+    try {
+      const booking = await Booking.findByIdAndUpdate(
+        bookingId,
+        { 
+          status,
+          updatedAt: new Date()
+        },
+        { new: true }
+      );
+      
+      if (!booking) {
+        throw new Error('Không tìm thấy đặt phòng');
+      }
+
+      return booking;
+    } catch (error) {
+      throw new Error('Không thể cập nhật trạng thái đặt phòng: ' + error.message);
+    }
   }
 }
 

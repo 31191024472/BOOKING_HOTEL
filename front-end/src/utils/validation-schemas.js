@@ -18,13 +18,15 @@ class Schemas extends ValidationSchema {
       .max(50, 'Quá dài!')
       .required('Bắt buộc'),
     email: ValidationSchema.email,
-    phoneNumber: Yup.string()
+    phone: Yup.string()
       .matches(phoneRegExp, 'Số điện thoại không hợp lệ')
       .required('Bắt buộc'),
     password: Yup.string()
       .min(8, 'Mật khẩu quá ngắn - tối thiểu phải có 8 ký tự.')
       .required('Bắt buộc'),
-    confirmPassword: Yup.string().required('Bắt buộc'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Mật khẩu không khớp')
+      .required('Bắt buộc'),
   });
 }
 

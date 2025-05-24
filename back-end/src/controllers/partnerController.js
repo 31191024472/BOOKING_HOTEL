@@ -673,3 +673,33 @@ export const getRoomDetails = async (req, res) => {
     });
   }
 };
+
+// Cập nhật trạng thái đặt phòng
+export const updateBookingStatus = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const { status } = req.body;
+
+    // Kiểm tra trạng thái hợp lệ
+    if (!["Pending", "Confirmed", "Cancelled"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Trạng thái không hợp lệ"
+      });
+    }
+
+    // Cập nhật trạng thái
+    const updatedBooking = await bookingServices.updateBookingStatus(bookingId, status);
+
+    res.json({
+      success: true,
+      data: updatedBooking
+    });
+  } catch (error) {
+    console.error('Error updating booking status:', error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi khi cập nhật trạng thái đặt phòng"
+    });
+  }
+};

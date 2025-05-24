@@ -13,7 +13,7 @@ const validations = {
   fields: {
     email: {
       required: true,
-      pattern: /^[^\s-]\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}[^\s-]$/i,
+      pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
   },
 
@@ -25,6 +25,7 @@ const validations = {
    * @returns {boolean} - Chỉ ra giá trị trường có hợp lệ hay không.
    */
   validate(field, value) {
+    if (!value) return false;
     return this.fields[field] ? this.fields[field].pattern.test(value) : false;
   },
 };
