@@ -7,22 +7,35 @@ import Home from './routes/home/Home';
 import HotelsSearch from './routes/listings/HotelsSearch';
 import UserProfile from './routes/user-profile/UserProfile';
 // import { makeServer } from './mirage/mirageServer';
-import AdminDashboard from 'routes/admin/AdminDashboard';
-import AdminLayout from 'routes/admin/AdminLayout';
-import EmailPromotion from 'routes/admin/AdminNotification';
-import BookingManagement from 'routes/admin/BookingManagement';
-import HotelManagement from 'routes/admin/HotelManagement';
-import ProtectedRoute from 'routes/admin/ProtectedRoute';
-import RoomManagement from 'routes/admin/RoomManagement';
-import UserManagement from 'routes/admin/UserManagement';
-import BookingConfirmation from 'routes/booking-confimation/BookingConifrmation';
-import Checkout from 'routes/checkout/Checkout';
+import AdminDashboard from './routes/admin/AdminDashboard';
+import AdminLayout from './routes/admin/AdminLayout';
+import EmailPromotion from './routes/admin/AdminNotification';
+import BookingManagement from './routes/admin/BookingManagement';
+import HotelManagement from './routes/admin/HotelManagement';
+import ProtectedRoute from './routes/admin/ProtectedRoute';
+import RoomManagement from './routes/admin/RoomManagement';
+import UserManagement from './routes/admin/UserManagement';
+import BookingConfirmation from './routes/booking-confimation/BookingConifrmation';
+import Checkout from './routes/checkout/Checkout';
 import AboutUs from './routes/about-us/AboutUs';
 import ForgotPassword from './routes/forgot-password/ForgotPassword';
 import HotelDetails from './routes/hotel-details/HotelDetails';
 import BaseLayout from './routes/layouts/base-layout/BaseLayout';
 import Login from './routes/login/Login';
 import Register from './routes/register/Register';
+
+// Partner imports
+import PartnerLayout from './routes/partner/PartnerLayout';
+import PartnerDashboard from './routes/partner/Dashboard';
+import PartnerProtectedRoute from './routes/partner/PartnerProtectedRoute';
+import PartnerHotelManagement from './routes/partner/HotelManagement';
+import PartnerRoomManagement from './routes/partner/RoomManagement';
+import PartnerBookingManagement from './routes/partner/BookingManagement';
+import PartnerPromotionManagement from './routes/partner/PromotionManagement';
+import PartnerAccountManagement from './routes/partner/AccountManagement';
+import PartnerReviewManagement from './routes/partner/ReviewManagement';
+import PartnerReportManagement from './routes/partner/ReportManagement';
+
 // if (process.env.NODE_ENV === 'development') {
 //   makeServer();
 // }
@@ -89,6 +102,26 @@ const router = createBrowserRouter([
           { path: 'hotels', element: <HotelManagement /> },
           { path: 'rooms', element: <RoomManagement /> },
           { path: 'notifications', element: <EmailPromotion /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/partner',
+    element: <PartnerProtectedRoute />,
+    children: [
+      {
+        path: '',
+        element: <PartnerLayout />,
+        children: [
+          { path: '', element: <PartnerDashboard /> },
+          { path: 'hotels', element: <PartnerHotelManagement /> },
+          { path: 'rooms', element: <PartnerRoomManagement /> },
+          { path: 'bookings', element: <PartnerBookingManagement /> },
+          { path: 'promotions', element: <PartnerPromotionManagement /> },
+          { path: 'account', element: <PartnerAccountManagement /> },
+          { path: 'reviews', element: <PartnerReviewManagement /> },
+          { path: 'reports', element: <PartnerReportManagement /> }
         ],
       },
     ],

@@ -50,28 +50,22 @@ const Login = () => {
         context.setIsAuthenticated(true);
         context.setUserDetails(response.userDetails);
 
-        // 3. Kích hoạt kiểm tra xác thực
-        await context.triggerAuthCheck();
-        if (context.loading) {
-          setErrorMessage("Đang kiểm tra thông tin người dùng...");
-          return; // Nếu đang trong quá trình kiểm tra thông tin, không thực hiện chuyển hướng
-        }
-        // 3. Chuyển hướng thông minh
-        setTimeout(() => {
-          const { userDetails } = context;        
-          if (userDetails?.role === "admin") {
-            navigate("/admin"); 
+        // 3. Kiểm tra role và chuyển hướng
+        const userRole = response.userDetails.role;
+        console.log('User role:', userRole);
+
+        if (userRole === 'admin') {
+          navigate('/admin');
+        } else if (userRole === 'partner') {
+          navigate('/partner');
+        } else {
+          const fromPage = location.state?.from;
+          if (fromPage && fromPage.includes('/hotel/')) {
+            navigate(fromPage);
           } else {
-            const fromPage = location.state?.from;
-            if (fromPage && fromPage.includes("/hotel/")) {
-              navigate(fromPage); 
-            } else {
-              navigate("/user-profile");
-            }
+            navigate('/user-profile');
           }
-          
-        }, 100);
-        
+        }
       } else {
         setErrorMessage(response.errors?.[0] || LOGIN_MESSAGES.FAILED);
       }

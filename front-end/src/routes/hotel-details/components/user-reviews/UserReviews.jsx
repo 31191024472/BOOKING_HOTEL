@@ -172,7 +172,7 @@ const UserReviews = ({
             {reviewData.data.map((review, index) => (
               <Review
                 key={index}
-                reviewerName={`${review.userId.lastName}`}
+                reviewerName={review.userId ? `${review.userId.lastName || 'Khách'}` : 'Khách'}
                 reviewDate={review.date}
                 review={review.review}
                 rating={review.rating}
